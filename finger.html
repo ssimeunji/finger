@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Browser Fingerprint</title>
+  <script src="fingerprint2.js"></script>
+</head>
+<body>
+  <div id="fingerprint"></div>
+
+  <script>
+    function getBrowserFingerprint() {
+      return new Promise((resolve, reject) => {
+        Fingerprint2.get((components) => {
+          const values = components.map((component) => component.value);
+          const fingerprint = Fingerprint2.x64hash128(values.join(''), 31);
+          resolve(fingerprint);
+        });
+      });
+    }
+
+    // Usage example
+    getBrowserFingerprint().then((fingerprint) => {
+	  const fingerprintDiv = document.getElementById("fingerprint");
+	  fingerprintDiv.innerText = "Canvas Fingerprint: " + fingerprint;
+      console.log(fingerprint);
+    }).catch((error) => {
+      console.error(error);
+    });
+  </script>
+</body>
+</html>
